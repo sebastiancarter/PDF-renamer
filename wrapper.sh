@@ -1,14 +1,23 @@
 #!/bin/bash 
 
-for thing in ./*.pdf; do
-	echo $thing
-	title=`python pdfParser.py $thing`
+touch titleless.txt
+
+for pdfFile in ./*.pdf; do
+	echo $pdfFile
+	title=`python pdfParser.py $pdfFile`
 	echo $title
-	if [[ $title == "sorry $thing has no title" ]]; then
+	if [[ $title == "sorry $pdfFile has no title" ]]; then
 		echo "this shit has no title metadata"
-		`mv $thing titleless/`
+		`echo $pdfFile >> titleless.txt`
 	else
-		mv $thing $title
+		mv $pdfFile $title
 	fi
 done
 
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "here's the shit that didn't have title metadata"
+
+cat titleless.txt
+
+echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+rm ./titleless.txt
