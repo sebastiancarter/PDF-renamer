@@ -13,7 +13,7 @@ for pdfFile in pdfs/march_19_2021/*.pdf; do
 		`echo $pdfFile >> runReport.txt`
 	else
 		mv sample.txt $title.txt
-		mv pdfFile $title.txt
+		mv pdfFile $title.pdf
 	fi
 
 
