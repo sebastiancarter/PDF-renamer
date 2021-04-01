@@ -9,7 +9,7 @@ for pdfFile in pdfs/march_19_2021/*.pdf; do
 	`python pdfParser2.py $pdfFile > sample.txt`
 	title=`head -1 sample.txt`
 	if [[ $title == "sorry, $pdfFile is an invalid file" ]]; then
-		echo "this shit has no title metadata"
+		echo "this file is incorrect"
 		`echo $pdfFile >> runReport.txt`
 	else
 		mv sample.txt $title.txt
