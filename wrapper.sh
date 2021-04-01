@@ -1,23 +1,32 @@
 #!/bin/bash 
 
-touch titleless.txt
+touch runReport.txt
 
-for pdfFile in ./*.pdf; do
+
+# remember to change this depending on what you run it on
+for pdfFile in pdfs/march_19_2021/*.pdf; do
 	echo $pdfFile
-	title=`python pdfParser.py $pdfFile`
-	echo $title
-	if [[ $title == "sorry $pdfFile has no title" ]]; then
+	`python pdfParser2.py $pdfFile > sample.txt`
+	title=`head -1 sample.txt`
+	if [[ $title == "sorry, $pdfFile is an invalid file" ]]; then
 		echo "this shit has no title metadata"
-		`echo $pdfFile >> titleless.txt`
+		`echo $pdfFile >> runReport.txt`
 	else
-		mv $pdfFile $title
+		mv sample.txt $title.txt
+		mv pdfFile $title.txt
 	fi
+
+
+
+	echo $title
+
+
+
+
 done
 
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo "here's the shit that didn't have title metadata"
-
-cat titleless.txt
-
+echo "RUN REPORT:"
+cat runReport.txt
 echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-rm ./titleless.txt
+
